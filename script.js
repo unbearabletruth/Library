@@ -18,6 +18,17 @@ function addBookToLibrary(newbook) {
     myLibrary.push(newbook);
 }
 
+function removeBookFromLibrary(name) {
+    myLibrary = myLibrary.filter((book) => book.name !== name);
+}
+
+function update(){
+    while (shelf.firstChild) {
+        shelf.removeChild(shelf.firstChild);
+    }
+    printBooks();
+}
+
 function printBooks(){
     myLibrary.forEach((book)=>{
         let newItem = document.createElement("div"); 
@@ -26,6 +37,13 @@ function printBooks(){
         let newAuthor = document.createElement("div");
         let newPages = document.createElement("div");
         let newRead = document.createElement("div");
+        let remove = document.createElement("button");
+        remove.textContent = "remove book"
+        remove.addEventListener("click", () => {
+            removeBookFromLibrary(newTitle.innerText);
+            update();
+            console.log(myLibrary)});
+        newItem.appendChild(remove);
         newItem.appendChild(newTitle);
         newItem.appendChild(newAuthor);
         newItem.appendChild(newPages);
@@ -42,11 +60,10 @@ const ThePlague = new Book("The Plague", "Albert Camus", 300, "read");
 ThePlague 
 const NeverLetMeGo = new Book("Never Let Me Go", "Kazuo Ishiguro", 350, "read");
 addBookToLibrary(ThePlague);
-//addBookToLibrary(NeverLetMeGo);
+addBookToLibrary(NeverLetMeGo);
 
-//printBooks();
 
-/*button.addEventListener("click", () => {
+button.addEventListener("click", function handler(e){
     let form = document.createElement("form");
     let titleinput = document.createElement("input");
     titleinput.type = "text";
@@ -63,18 +80,15 @@ addBookToLibrary(ThePlague);
     form.appendChild(readinput);
     form.appendChild(submit);
     shelf.appendChild(form);
-    submit.addEventListener("click", () => {
-        const newbook = new Book(titleinput, authorinput, pagesinput, readinput);
-        console.log(newbook);
+    submit.addEventListener("click", (e) => {
+        const newbook = new Book(titleinput.value, authorinput.value, pagesinput.value, readinput.value);
         addBookToLibrary(newbook);
+        e.preventDefault();
+        printBooks();
+        
     })
-}
-    );*/
-
-button.addEventListener("click", (e)=> {
-    const newbook = new Book(inputtitle.value, inputauthor.value, inputpages.value, inputread.value);
-    addBookToLibrary(newbook);
     e.preventDefault();
-    printBooks();
+}
+    );
+
     
-})
