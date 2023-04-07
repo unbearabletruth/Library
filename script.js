@@ -14,6 +14,14 @@ function Book(name, author, pages, read) {
     this.read = read;
 }
 
+Book.prototype.setRead = function(){
+    console.log(this.read);
+    if (this.read === "not read!"){
+        return this.read = "read it!";
+    } else {
+        return this.read = "not read!";}
+}
+
 function addBookToLibrary(newbook) {
     myLibrary.push(newbook);
 }
@@ -29,6 +37,14 @@ function update(){
     printBooks();
 }
 
+/*
+function setRead(book){
+    console.log(book);
+    if (book === "not read"){
+        return "read it!";
+    } return "not read!";
+}*/
+
 function printBooks(){
     myLibrary.forEach((book)=>{
         let newItem = document.createElement("div"); 
@@ -37,12 +53,22 @@ function printBooks(){
         let newAuthor = document.createElement("div");
         let newPages = document.createElement("div");
         let newRead = document.createElement("div");
+        
         let remove = document.createElement("button");
-        remove.textContent = "remove book"
+        remove.textContent = "remove book";
         remove.addEventListener("click", () => {
             removeBookFromLibrary(newTitle.innerText);
             update();
             console.log(myLibrary)});
+
+        let changeRead = document.createElement("button");
+        changeRead.textContent = "read it";
+        changeRead.addEventListener("click", () => {
+            console.log(book);
+            newRead.innerText = book.setRead();
+        })
+        
+        newItem.appendChild(changeRead);
         newItem.appendChild(remove);
         newItem.appendChild(newTitle);
         newItem.appendChild(newAuthor);
@@ -56,35 +82,58 @@ function printBooks(){
       })
 }
 
-const ThePlague = new Book("The Plague", "Albert Camus", 300, "read");
-ThePlague 
-const NeverLetMeGo = new Book("Never Let Me Go", "Kazuo Ishiguro", 350, "read");
+const ThePlague = new Book("The Plague", "Albert Camus", 300, "read it!");
+const NeverLetMeGo = new Book("Never Let Me Go", "Kazuo Ishiguro", 350, "read it!");
 addBookToLibrary(ThePlague);
 addBookToLibrary(NeverLetMeGo);
 
 
 button.addEventListener("click", function handler(e){
     let form = document.createElement("form");
+
+    let titlelabel = document.createElement("label");
+    titlelabel.textContent = "Title";
     let titleinput = document.createElement("input");
     titleinput.type = "text";
+
+    let authorlabel = document.createElement("label");
+    authorlabel.textContent = "Author";
     let authorinput = document.createElement("input");
     authorinput.type = "text";
+
+    let pageslabel = document.createElement("label");
+    pageslabel.textContent = "Pages";
     let pagesinput = document.createElement("input");
     pagesinput.type = "number";
+   
+    let readlabel = document.createElement("label");
+    readlabel.textContent = "Read status";
     let readinput = document.createElement("input");
     readinput.type = "text";
+
     let submit = document.createElement("button");
+    submit.innerText = "Submit";
+
+    form.appendChild(titlelabel);
     form.appendChild(titleinput);
+
+    form.appendChild(authorlabel);
     form.appendChild(authorinput);
+    
+    form.appendChild(pageslabel);
     form.appendChild(pagesinput);
+
+    form.appendChild(readlabel);
     form.appendChild(readinput);
+
     form.appendChild(submit);
+    
     shelf.appendChild(form);
     submit.addEventListener("click", (e) => {
         const newbook = new Book(titleinput.value, authorinput.value, pagesinput.value, readinput.value);
         addBookToLibrary(newbook);
         e.preventDefault();
-        printBooks();
+        update();
         
     })
     e.preventDefault();
