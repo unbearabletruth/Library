@@ -58,15 +58,15 @@ function printBooks(){
         remove.textContent = "remove book";
         remove.addEventListener("click", () => {
             removeBookFromLibrary(newTitle.innerText);
-            update();
-            console.log(myLibrary)});
+            newItem.remove();
+});
 
         let changeRead = document.createElement("button");
         changeRead.textContent = "read it";
         changeRead.addEventListener("click", () => {
             console.log(book);
             newRead.innerText = book.setRead();
-        })
+        });
         
         newItem.appendChild(changeRead);
         newItem.appendChild(remove);
@@ -81,6 +81,42 @@ function printBooks(){
         shelf.appendChild(newItem);
       })
 }
+
+function printAdded(book){
+    let newItem = document.createElement("div"); 
+        newItem.className = "book";
+        let newTitle = document.createElement("div");
+        let newAuthor = document.createElement("div");
+        let newPages = document.createElement("div");
+        let newRead = document.createElement("div");
+        
+        let remove = document.createElement("button");
+        remove.textContent = "remove book";
+        remove.addEventListener("click", () => {
+            removeBookFromLibrary(newTitle.innerText);
+            newItem.remove();
+});
+
+        let changeRead = document.createElement("button");
+        changeRead.textContent = "read it";
+        changeRead.addEventListener("click", () => {
+            console.log(book);
+            newRead.innerText = book.setRead();
+        });
+        
+        newItem.appendChild(changeRead);
+        newItem.appendChild(remove);
+        newItem.appendChild(newTitle);
+        newItem.appendChild(newAuthor);
+        newItem.appendChild(newPages);
+        newItem.appendChild(newRead);
+        newTitle.innerText = `${book.name}`;
+        newAuthor.innerText = `${book.author}`;
+        newPages.innerText = `Number of pages: ${book.pages}`;
+        newRead.innerText = `${book.read}`;
+        shelf.appendChild(newItem);
+      }
+
 
 const ThePlague = new Book("The Plague", "Albert Camus", 300, "read it!");
 const NeverLetMeGo = new Book("Never Let Me Go", "Kazuo Ishiguro", 350, "read it!");
@@ -127,17 +163,19 @@ button.addEventListener("click", function handler(e){
     form.appendChild(readinput);
 
     form.appendChild(submit);
-    
+
     shelf.appendChild(form);
     submit.addEventListener("click", (e) => {
         const newbook = new Book(titleinput.value, authorinput.value, pagesinput.value, readinput.value);
         addBookToLibrary(newbook);
         e.preventDefault();
-        update();
-        
+        //update();
+        form.remove();
+        printAdded(newbook);
     })
     e.preventDefault();
 }
     );
 
     
+printBooks();
