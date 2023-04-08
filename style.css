@@ -1,24 +1,33 @@
+
 body {
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #e0f2fe;
+    gap: 15px;
+    color: #262626;
+    margin-bottom: 100px;
 }
 
 .shelf {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    width: 600px;
+    gap: 10px;
+    width: 800px;
+    
 }
 
 .book {
     height: 125px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    border: 2px solid lightblue;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f0fdfa;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 form {
@@ -40,10 +49,33 @@ input:focus {
     border: 1px solid lightsteelblue;
 }
 
+input[type="checkbox"] {
+    width: auto;
+}
+
 button {
-    width: 100px;
-    height: 35px;
+    width: 60px;
+    height: 25px;
     border-radius: 20px;
     border: 0px;
-    background-color: tomato;
+    background-color: #115e59;
+    color: white;
+}
+
+.buttons {
+    display: flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 5px;
+}
+
+button.addbutton {
+    width: 100px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#readstatuslabel {
+    font-size: 12px;
 }

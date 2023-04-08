@@ -37,49 +37,10 @@ function update(){
     printBooks();
 }
 
-/*
-function setRead(book){
-    console.log(book);
-    if (book === "not read"){
-        return "read it!";
-    } return "not read!";
-}*/
-
 function printBooks(){
     myLibrary.forEach((book)=>{
-        let newItem = document.createElement("div"); 
-        newItem.className = "book";
-        let newTitle = document.createElement("div");
-        let newAuthor = document.createElement("div");
-        let newPages = document.createElement("div");
-        let newRead = document.createElement("div");
-        
-        let remove = document.createElement("button");
-        remove.textContent = "remove book";
-        remove.addEventListener("click", () => {
-            removeBookFromLibrary(newTitle.innerText);
-            newItem.remove();
-});
-
-        let changeRead = document.createElement("button");
-        changeRead.textContent = "read it";
-        changeRead.addEventListener("click", () => {
-            console.log(book);
-            newRead.innerText = book.setRead();
-        });
-        
-        newItem.appendChild(changeRead);
-        newItem.appendChild(remove);
-        newItem.appendChild(newTitle);
-        newItem.appendChild(newAuthor);
-        newItem.appendChild(newPages);
-        newItem.appendChild(newRead);
-        newTitle.innerText = `${book.name}`;
-        newAuthor.innerText = `${book.author}`;
-        newPages.innerText = `Number of pages: ${book.pages}`;
-        newRead.innerText = `${book.read}`;
-        shelf.appendChild(newItem);
-      })
+        printAdded(book);
+    })
 }
 
 function printAdded(book){
@@ -90,26 +51,34 @@ function printAdded(book){
         let newPages = document.createElement("div");
         let newRead = document.createElement("div");
         
+        let buttonsDiv = document.createElement("div")
+        buttonsDiv.className = "buttons";
+
         let remove = document.createElement("button");
-        remove.textContent = "remove book";
+        remove.textContent = "remove";
         remove.addEventListener("click", () => {
             removeBookFromLibrary(newTitle.innerText);
             newItem.remove();
 });
-
-        let changeRead = document.createElement("button");
-        changeRead.textContent = "read it";
+        let changeReadLabel = document.createElement("label");
+        changeReadLabel.textContent = "Already read?"
+        changeReadLabel.id = "readstatuslabel"
+        let changeRead = document.createElement("input");
+        changeRead.type = "checkbox";
         changeRead.addEventListener("click", () => {
             console.log(book);
             newRead.innerText = book.setRead();
         });
         
-        newItem.appendChild(changeRead);
-        newItem.appendChild(remove);
+        
         newItem.appendChild(newTitle);
         newItem.appendChild(newAuthor);
         newItem.appendChild(newPages);
         newItem.appendChild(newRead);
+        newItem.appendChild(buttonsDiv);
+        buttonsDiv.appendChild(changeReadLabel);
+        buttonsDiv.appendChild(changeRead);
+        buttonsDiv.appendChild(remove);
         newTitle.innerText = `${book.name}`;
         newAuthor.innerText = `${book.author}`;
         newPages.innerText = `Number of pages: ${book.pages}`;
@@ -120,11 +89,13 @@ function printAdded(book){
 
 const ThePlague = new Book("The Plague", "Albert Camus", 300, "read it!");
 const NeverLetMeGo = new Book("Never Let Me Go", "Kazuo Ishiguro", 350, "read it!");
+const CrimeAndPunishment = new Book("Crime and Punishment", "Fyodor Dostoevsky", 650, "read it!")
 addBookToLibrary(ThePlague);
 addBookToLibrary(NeverLetMeGo);
+addBookToLibrary(CrimeAndPunishment);
 
 
-button.addEventListener("click", function handler(e){
+button.addEventListener("click", function formHandler(e){
     let form = document.createElement("form");
 
     let titlelabel = document.createElement("label");
@@ -169,7 +140,6 @@ button.addEventListener("click", function handler(e){
         const newbook = new Book(titleinput.value, authorinput.value, pagesinput.value, readinput.value);
         addBookToLibrary(newbook);
         e.preventDefault();
-        //update();
         form.remove();
         printAdded(newbook);
     })
