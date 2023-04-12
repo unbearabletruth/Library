@@ -93,64 +93,62 @@ class Library {
             newPages.innerText = `Number of pages: ${book.pages}`;
             newRead.innerText = `${book.read}`;
             shelf.appendChild(newItem);
-          }
+    };
     
-}
-
-
-button.addEventListener("click", function createForm(e){
-    let form = document.createElement("form");
-
-    let titlelabel = document.createElement("label");
-    titlelabel.textContent = "Title";
-    let titleinput = document.createElement("input");
-    titleinput.type = "text";
-
-    let authorlabel = document.createElement("label");
-    authorlabel.textContent = "Author";
-    let authorinput = document.createElement("input");
-    authorinput.type = "text";
-
-    let pageslabel = document.createElement("label");
-    pageslabel.textContent = "Pages";
-    let pagesinput = document.createElement("input");
-    pagesinput.type = "number";
-   
-    let readlabel = document.createElement("label");
-    readlabel.textContent = "Read status";
-    let readinput = document.createElement("input");
-    readinput.type = "text";
-
-    let submit = document.createElement("button");
-    submit.innerText = "Submit";
-
-    form.appendChild(titlelabel);
-    form.appendChild(titleinput);
-
-    form.appendChild(authorlabel);
-    form.appendChild(authorinput);
+    formBook(){
+        button.addEventListener("click", (e) => {
+        let form = document.createElement("form");
     
-    form.appendChild(pageslabel);
-    form.appendChild(pagesinput);
-
-    form.appendChild(readlabel);
-    form.appendChild(readinput);
-
-    form.appendChild(submit);
-
-    shelf.appendChild(form);
-    submit.addEventListener("click", (e) => {
-        const newbook = new Book(titleinput.value, authorinput.value, pagesinput.value, readinput.value);
-        VeryNiceLibrary.addBookToLibrary(newbook);
+        let titlelabel = document.createElement("label");
+        titlelabel.textContent = "Title";
+        let titleinput = document.createElement("input");
+        titleinput.type = "text";
+    
+        let authorlabel = document.createElement("label");
+        authorlabel.textContent = "Author";
+        let authorinput = document.createElement("input");
+        authorinput.type = "text";
+    
+        let pageslabel = document.createElement("label");
+        pageslabel.textContent = "Pages";
+        let pagesinput = document.createElement("input");
+        pagesinput.type = "number";
+       
+        let readlabel = document.createElement("label");
+        readlabel.textContent = "Read status";
+        let readinput = document.createElement("input");
+        readinput.type = "text";
+    
+        let submit = document.createElement("button");
+        submit.innerText = "Submit";
+    
+        form.appendChild(titlelabel);
+        form.appendChild(titleinput);
+    
+        form.appendChild(authorlabel);
+        form.appendChild(authorinput);
+        
+        form.appendChild(pageslabel);
+        form.appendChild(pagesinput);
+    
+        form.appendChild(readlabel);
+        form.appendChild(readinput);
+    
+        form.appendChild(submit);
+    
+        shelf.appendChild(form);
+        submit.addEventListener("click", (e) => {
+            const newbook = new Book(titleinput.value, authorinput.value, pagesinput.value, readinput.value);
+            VeryNiceLibrary.addBookToLibrary(newbook);
+            e.preventDefault();
+            form.remove();
+            VeryNiceLibrary.renderBook(newbook);
+        })
         e.preventDefault();
-        form.remove();
-        VeryNiceLibrary.renderBook(newbook);
-    })
-    e.preventDefault();
+    }
+        );
 }
-    );
-
-
+};
 
 const ThePlague = new Book("The Plague", "Albert Camus", 300, "read it!");
 const NeverLetMeGo = new Book("Never Let Me Go", "Kazuo Ishiguro", 350, "read it!");
@@ -161,3 +159,4 @@ VeryNiceLibrary.addBookToLibrary(NeverLetMeGo);
 VeryNiceLibrary.addBookToLibrary(CrimeAndPunishment);
 
 VeryNiceLibrary.renderShelf();
+VeryNiceLibrary.formBook();
